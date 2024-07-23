@@ -39,9 +39,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      appBar: AppBar(
-        title: const Text('Ev Sohbet'),
-      ),
       body: Column(
         children: [
           Expanded(

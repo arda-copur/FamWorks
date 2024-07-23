@@ -1,3 +1,4 @@
+import 'package:fam_works/screens/activity_screen.dart';
 import 'package:fam_works/screens/chat_screen.dart';
 import 'package:fam_works/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -306,7 +307,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ChatScreen(homeCode: homeCode)),
                           );
                         },
-                        icon: const Icon(Icons.message,color: Colors.white,))
+                        icon: const Icon(Icons.message,color: Colors.white,)),
+                        IconButton(onPressed: () {
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ActivityScreen()));
+                        }, icon: const Icon(Icons.event,color: Colors.white,))
                   ],
                 ),
               );
@@ -320,30 +328,11 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Ev',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Sohbet',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.amber,
-        onTap: (index) {
-          _currentIndex = index;
-        },
-      ),
+    
     );
   }
-  int _currentIndex = 0;
+
+
 
   // IconButton(
 //   icon: Icon(Icons.star, color: Colors.yellow),

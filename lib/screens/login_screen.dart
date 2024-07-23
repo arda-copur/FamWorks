@@ -1,3 +1,4 @@
+import 'package:fam_works/screens/rotate_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       User user = userCredential.user!;
 
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacement(context, (MaterialPageRoute(builder: (context) => MyBottomNavigationBar())));
     } on FirebaseAuthException catch (e) {
       print("Error: $e");
     }

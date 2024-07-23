@@ -70,9 +70,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter your name';
+                      return 'Lütfen isminizi girin';
                     }
-                    return null;
+                    else if (value.length < 2){
+                       return "Lütfen en az 3 karakter girin";
+                    }
+                    else {
+                      return null;
+                    }
                   },
                 ),
                  const SizedBox(height: 16),
@@ -109,9 +114,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter your password';
+                      return 'Lütfen şifre giriniz';
                     }
-                    return null;
+                    else if (value.length < 6) {
+                       return "Şifre en az 6 karakter olmalıdır";
+                    }
+                    else {
+                      return null;
+                    }
+                    
                   },
                 ),
                  const SizedBox(height: 16),
