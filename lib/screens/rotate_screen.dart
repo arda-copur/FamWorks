@@ -8,6 +8,8 @@ import 'chat_screen.dart';
 import 'profile_screen.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
+  const MyBottomNavigationBar({super.key});
+
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
@@ -58,22 +60,22 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
               items:  <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   backgroundColor: bgColor,
-                  icon: Icon(Icons.home),
+                  icon: const Icon(Icons.home),
                   label: 'Ev',
                 ),
                 BottomNavigationBarItem(
                     backgroundColor: bgColor,
-                  icon: Icon(Icons.event),
+                  icon: const Icon(Icons.event),
                   label: 'Aktivite',
                 ),
                 BottomNavigationBarItem(
                     backgroundColor: bgColor,
-                  icon: Icon(Icons.chat),
+                  icon: const Icon(Icons.chat),
                   label: 'Sohbet',
                 ),
                 BottomNavigationBarItem(
                     backgroundColor: bgColor,
-                  icon: Icon(Icons.person),
+                  icon: const Icon(Icons.person),
                   label: 'Profil',
                 ),
               ],
@@ -130,8 +132,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                     
                   ),
                    ListTile(
-                    leading: Icon(Icons.map),
-                    title: Text('Map'),
+                    leading: const Icon(Icons.map),
+                    title: const Text('Harita'),
                     onTap: () {
                       Navigator.pop(context);
                       _onItemTapped(4);

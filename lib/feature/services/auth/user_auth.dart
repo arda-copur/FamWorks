@@ -1,0 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fam_works/feature/utils/navigator_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+class UserAuth {
+  
+  Future<void> registerUser(String name, String email, String password,
+      String homeCode, String? imageUrl,context,Future<T?> Function<T>(BuildContext) registerDialog,) async {
+    try {
+      DocumentSnapshot homeDoc = await FirebaseFirestore.instance
+          .collection('homes')
+          .doc(homeCode)
+          .get();
+
+      if (homeDoc.exists) {
+        registerDialog;
+        return; // Exit the function if homeCode exists
+      }
+
+      // Proceed with registration if homeCode does not exist
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User user = userCredential.user!;
+
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'name': name,
+        'email': email,
+        'homeCode': homeCode,
+        'profilePic': imageUrl ?? '',
+      });
+
+      DocumentReference homeRef =
+          FirebaseFirestore.instance.collection('homes').doc(homeCode);
+      await homeRef.set({
+        'members': FieldValue.arrayUnion([user.uid])
+      }, SetOptions(merge: true));
+
+      NavigatorHelper.navigateToView(context, "home");
+    } on FirebaseAuthException catch (e) {
+      print("Error: $e");
+    }
+  }
+}

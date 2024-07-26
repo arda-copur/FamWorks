@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fam_works/models/message_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,13 +25,15 @@ class _ChatScreenState extends State<ChatScreen> {
       var userName = userDoc['name'];
       var userProfilePic = userDoc['profilePic'];
 
-      FirebaseFirestore.instance.collection('chats').doc(widget.homeCode).collection('messages').add({
-        'text': _messageController.text,
-        'senderId': currentUser.uid,
-        'senderName': userName,
-        'senderProfilePic': userProfilePic,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+      Message message = Message(
+      text: _messageController.text,
+      senderId: currentUser.uid,
+      senderName: userName,
+      senderProfilePic: userProfilePic,
+      timestamp: Timestamp.now(),
+    );
+
+    FirebaseFirestore.instance.collection('chats').doc(widget.homeCode).collection('messages').add(message.toMap());
       _messageController.clear();
     }
   }

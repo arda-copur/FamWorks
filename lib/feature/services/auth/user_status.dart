@@ -4,8 +4,8 @@ import 'package:fam_works/screens/rotate_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AuthChecker extends StatelessWidget {
-  const AuthChecker({super.key});
+class UserAuthStatus extends StatelessWidget {
+  const UserAuthStatus({super.key});
 
   @override
   Widget build(BuildContext context) {
