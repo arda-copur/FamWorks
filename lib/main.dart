@@ -1,16 +1,12 @@
-import 'dart:async';
-
-import 'package:fam_works/feature/location/location_service.dart';
+import 'package:fam_works/core/providers/media_provider.dart';
+import 'package:fam_works/core/providers/register_provider.dart';
 import 'package:fam_works/feature/services/auth/user_status.dart';
-import 'package:fam_works/screens/chat_screen.dart';
-import 'package:fam_works/screens/create_task_screen.dart';
-import 'package:fam_works/screens/home_screen.dart';
-import 'package:fam_works/screens/login_screen.dart';
-import 'package:fam_works/screens/register_screen.dart';
-import 'package:fam_works/screens/rotate_screen.dart';
+import 'package:fam_works/feature/utils/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +14,15 @@ void main() async {
    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: []);
     // _startLocationUpdate();
-  runApp(const MyApp());
+ runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => RegisterProvider()),
+        ChangeNotifierProvider(create: (_) => MediaProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,17 +32,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fam Works',
       theme: ThemeData(     
       ),
-       home: AuthChecker(),
-       routes: {
-         '/login': (context) =>  LoginScreen(),
-         '/register': (context) => RegisterScreen(),
-         '/home': (context) => const HomeScreen(),
-         '/create-task': (context) => CreateTaskScreen(),
-         '/rotate': (context) => MyBottomNavigationBar(),
-       },
+       home: const UserAuthStatus(),
+       routes: Routes.appRoutes
 //image picker sdk hatası veriyor daha düşük paketine geç
     );
   }
