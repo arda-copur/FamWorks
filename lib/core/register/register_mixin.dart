@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-mixin RegisterErrors on StatefulWidget { //statefullwidget yerine direk ilgili textfieldsı kullanalım
-  final String nameError = "Geçersiz isim";
+mixin RegisterPasswordMixin on StatefulWidget { //statefullwidget yerine direk ilgili textfieldsı kullanalım
+  final String nullPassword = "Lütfen doldurunuz";
   final String wrongPassword = "Geçersiz email";
   final String weakPassword = "Zayıf parola";
 }
