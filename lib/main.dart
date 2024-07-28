@@ -1,5 +1,6 @@
+import 'package:fam_works/core/providers/bottom_provider.dart';
 import 'package:fam_works/core/providers/media_provider.dart';
-import 'package:fam_works/core/providers/register_provider.dart';
+import 'package:fam_works/core/providers/auth_module_provider.dart.dart';
 import 'package:fam_works/feature/services/auth/user_status.dart';
 import 'package:fam_works/feature/utils/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,8 +18,9 @@ void main() async {
  runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => RegisterProvider()),
+        ChangeNotifierProvider(create: (_) => AuthModuleProvider()),
         ChangeNotifierProvider(create: (_) => MediaProvider()),
+        ChangeNotifierProvider(create: (_) => BottomProvider()),
       ],
       child: const MyApp(),
     ),
