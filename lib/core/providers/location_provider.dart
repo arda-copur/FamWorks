@@ -3,8 +3,10 @@ import 'package:geolocator/geolocator.dart';
 
 class LocationProvider with ChangeNotifier {
   Position? _currentPosition;
+  Position ? _lastPosition;
 
   Position? get currentPosition => _currentPosition;
+  Position? get lastPosition => _lastPosition;
 
   Future<void> getCurrentLocation() async {
     bool serviceEnabled;
@@ -35,6 +37,7 @@ class LocationProvider with ChangeNotifier {
 
     // Konumu alın ve bildirimde bulunun.
     _currentPosition = await Geolocator.getCurrentPosition();
+   
     notifyListeners();
   }
 }
