@@ -56,6 +56,7 @@ dependencies:
   #Network
   http: ^1.0.0
   connectivity_plus: ^5.0.2
+  geolocator: ^11.0.0
   
 
 

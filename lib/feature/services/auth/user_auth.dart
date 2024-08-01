@@ -44,4 +44,21 @@ class UserAuth {
       print("Error: $e");
     }
   }
+
+
+  
+  Future<void> loginUser(String email, String password,context) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User user = userCredential.user!;
+
+      NavigatorHelper.navigateToView(context, 'rotate');
+    } on FirebaseAuthException catch (e) {
+      print("Error: $e");
+    }
+  }
 }

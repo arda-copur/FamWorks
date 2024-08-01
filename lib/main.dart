@@ -1,4 +1,5 @@
 import 'package:fam_works/core/providers/bottom_provider.dart';
+import 'package:fam_works/core/providers/location_provider.dart';
 import 'package:fam_works/core/providers/media_provider.dart';
 import 'package:fam_works/core/providers/auth_module_provider.dart.dart';
 import 'package:fam_works/feature/services/auth/user_status.dart';
@@ -21,6 +22,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthModuleProvider()),
         ChangeNotifierProvider(create: (_) => MediaProvider()),
         ChangeNotifierProvider(create: (_) => BottomProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: const MyApp(),
     ),

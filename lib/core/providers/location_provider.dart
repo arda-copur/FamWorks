@@ -1,12 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LocationProvider with ChangeNotifier {
   Position? _currentPosition;
-  Position ? _lastPosition;
 
   Position? get currentPosition => _currentPosition;
-  Position? get lastPosition => _lastPosition;
 
   Future<void> getCurrentLocation() async {
     bool serviceEnabled;
@@ -15,7 +15,6 @@ class LocationProvider with ChangeNotifier {
     // Konum servislerinin etkin olup olmadığını kontrol edin.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Konum servisleri etkin değilse, kullanıcıya bildir.
       return Future.error('Location services are disabled.');
     }
 
@@ -24,20 +23,39 @@ class LocationProvider with ChangeNotifier {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // İzin reddedildi.
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // İzin kalıcı olarak reddedildi.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    // Konumu alın ve bildirimde bulunun.
+    // Konumu alın ve Firestore'a kaydedin.
     _currentPosition = await Geolocator.getCurrentPosition();
-   
-    notifyListeners();
+
+    // Firebase Auth ile şu anki kullanıcıyı alın
+   User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      String name = userDoc['name'] ?? 'Kullanıcı';
+      String homeCode = userDoc['homeCode'];
+
+      await FirebaseFirestore.instance
+          .collection('locations')
+          .doc(user.uid) // Kullanıcıya özgü belgeyi güncelle
+          .set({
+            'latitude': _currentPosition!.latitude,
+            'longitude': _currentPosition!.longitude,
+            'name': name,
+            'homeCode': homeCode,
+          }, SetOptions(merge: true)); // Belgeyi güncellemek için `merge: true` kullanılır
+
+      notifyListeners();
+    }
   }
 }

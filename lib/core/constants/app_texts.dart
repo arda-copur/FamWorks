@@ -4,4 +4,6 @@ class AppTexts {
   static const String createAccount = "Hesap Oluştur";
   static const String againWelcome = "Tekrar Hoşgeldiniz";
   static const String clickForLogin = "Giriş yapmak için tıklayın";
+  static const String login = "Giriş";
+  static const String dontHaveAccount = 'Hesabınız\ yok mu? Kayıt olun';
 }
