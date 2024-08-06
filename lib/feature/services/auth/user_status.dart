@@ -1,6 +1,6 @@
 
-import 'package:fam_works/screens/login_screen.dart';
-import 'package:fam_works/screens/rotate_screen.dart';
+import 'package:fam_works/views/login_screen.dart';
+import 'package:fam_works/views/bottom_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class UserAuthStatus extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return  MyBottomNavigationBar();
+          return  const BottomView();
         } else {
           return LoginScreen();
         }

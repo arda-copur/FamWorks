@@ -2,11 +2,12 @@ import 'package:fam_works/core/constants/app_borders.dart';
 import 'package:fam_works/core/constants/app_colors.dart';
 import 'package:fam_works/core/constants/app_paddings.dart';
 import 'package:fam_works/core/constants/app_texts.dart';
+import 'package:fam_works/core/login/widgets/login_email_textfield.dart';
+import 'package:fam_works/core/login/widgets/login_password_textfield.dart';
+import 'package:fam_works/feature/services/auth/user_auth.dart';
 import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:fam_works/feature/utils/navigator_helper.dart';
-import 'package:fam_works/screens/rotate_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,8 +16,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final UserAuth auth = UserAuth();
+  final TextEditingController loginEmailController = TextEditingController();
+  final TextEditingController loginPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,44 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(color: Colors.white60),
                 ),
                 const AppHeightBox(height: 30),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: AppBorders.circularLow(),
-                    ),
-                    prefixIcon: const Icon(Icons.person),
-                    filled: true,
-                    fillColor: Colors.purple.shade50,
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
+                LoginEmailTextfield(
+                    emailController: loginEmailController),
                 const AppHeightBox(height: 16),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    hintText: 'Şifre',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: const Icon(Icons.lock),
-                    filled: true,
-                    fillColor: Colors.purple.shade50,
-                  ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
+                LoginPasswordTextfield(
+                    passwordController: loginPasswordController),
                 const AppHeightBox(height: 30),
                 SizedBox(
                   width: double.infinity,
@@ -88,19 +57,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: AppBorders.circularLow()
                       ),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        loginUser(
-                          _emailController.text,
-                          _passwordController.text,
+                        auth.loginUser(
+                          loginEmailController.text,
+                          loginPasswordController.text,
+                          context
                         );
                       }
                     },
                     child: const Text(
-                      'Giriş',
+                      AppTexts.login,
                       style: TextStyle(
                           color: AppColors.bgColor,
                           fontWeight: FontWeight.bold,
@@ -108,13 +78,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const AppHeightBox(height: 16),
                 TextButton(
                   onPressed: () {
                     NavigatorHelper.navigateToView(context, 'register');
                   },
                   child: const Text(
-                    'Hesabınız\ yok mu? Kayıt olun',
+                    AppTexts.dontHaveAccount,
                     style: TextStyle(color: Colors.white60),
                   ),
                 ),
@@ -126,18 +96,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> loginUser(String email, String password) async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      User user = userCredential.user!;
-
-      NavigatorHelper.navigateToView(context, 'rotate');
-    } on FirebaseAuthException catch (e) {
-      print("Error: $e");
-    }
-  }
 }

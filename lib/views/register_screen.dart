@@ -2,15 +2,13 @@ import 'package:fam_works/core/constants/app_colors.dart';
 import 'package:fam_works/core/constants/app_paddings.dart';
 import 'package:fam_works/core/constants/app_texts.dart';
 import 'package:fam_works/core/providers/media_provider.dart';
-import 'package:fam_works/core/providers/register_provider.dart';
-import 'package:fam_works/core/register/widgets/register_button.dart';
+import 'package:fam_works/core/providers/auth_module_provider.dart.dart';
 import 'package:fam_works/core/register/widgets/register_email_tf.dart';
 import 'package:fam_works/core/register/widgets/register_home_tf.dart';
 import 'package:fam_works/core/register/widgets/register_name_tf.dart.dart';
 import 'package:fam_works/core/register/widgets/register_password_tf.dart';
 import 'package:fam_works/feature/services/auth/user_auth.dart';
 import 'package:fam_works/feature/utils/app_box.dart';
-import 'package:fam_works/feature/utils/app_dialog.dart';
 import 'package:fam_works/feature/utils/navigator_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final registerProvider = Provider.of<RegisterProvider>(context, listen: true);
+    final registerProvider = Provider.of<AuthModuleProvider>(context, listen: false); //true idi. false veya registerUserdaki context patlatıyor mu bir bak
     final mediaProvider = Provider.of<MediaProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: AppColors.bgColor,

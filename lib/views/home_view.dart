@@ -1,42 +1,73 @@
-import 'package:fam_works/screens/activity_screen.dart';
-import 'package:fam_works/screens/chat_screen.dart';
-import 'package:fam_works/screens/profile_screen.dart';
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:fam_works/core/constants/app_borders.dart';
+import 'package:fam_works/core/constants/app_colors.dart';
+import 'package:fam_works/core/constants/app_paddings.dart';
+import 'package:fam_works/feature/services/connectivy/connectivy_manager.dart';
+import 'package:fam_works/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:intl/intl.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final Color bgColor = const Color(0xFF1C2341);
-  final Color containerColor = const Color(0xFF272D4A);
-  final Color white = const Color.fromARGB(255, 232, 218, 218);
+class _HomeViewState extends State<HomeView> {
+
+  late StreamSubscription<ConnectivityResult> _subscription;
+   String _connectionStatus = 'Bağlantı durumu: Bilinmiyor';
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = ConnectivityManager()
+        .connectivityStream
+        .listen((ConnectivityResult result) {
+      setState(() {
+        _connectionStatus =
+            ConnectivityManager().getConnectionStatusString(result);
+      });
+    });
+
+    _checkCurrentConnectivity();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
+  Future<void> _checkCurrentConnectivity() async {
+    ConnectivityResult result =
+        await ConnectivityManager().getCurrentConnectivity();
+    setState(() {
+      _connectionStatus =
+          ConnectivityManager().getConnectionStatusString(result);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
-      backgroundColor: bgColor,
-      // appBar: AppBar(
-      //   title: Text('Home'),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(Icons.logout),
-      //       onPressed: () async {
-      //         await FirebaseAuth.instance.signOut();
-      //         Navigator.pushReplacementNamed(context, '/login');
-      //       },
-      //     )
-      //   ],
-      // ),
+      backgroundColor: AppColors.bgColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.bgColor,
+        centerTitle: true,
+        title: Text(_connectionStatus,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: Colors.white)),
+      ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -47,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData) {
-            return const Center(child: Text('No data found'));
+            return const Center(child: Text('Veri bulunamadı'));
           }
 
           var userData = snapshot.data!;
@@ -91,14 +122,15 @@ class _HomeScreenState extends State<HomeScreen> {
               //UI BAŞLANGICI
 
               return Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const AppPaddings.allMedium(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Kullanıcı mini profil kartı
                     Container(
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(color: containerColor),
+                      padding: const AppPaddings.allNormal(),
+                      decoration: BoxDecoration(
+                          color: AppColors.containerColor,
+                          borderRadius: AppBorders.circularLow()),
                       child: Row(
                         children: [
                           CircleAvatar(
@@ -114,19 +146,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Text(
                                 'Merhaba ${userData['name']}!',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: white),
+                                    color: AppColors.white),
                               ),
                               const SizedBox(height: 8.0),
                               Text(
                                 'Son 24 saatte $tasksCompletedByUserInLast24Hours görev tamamladın',
-                                style: TextStyle(color: white),
+                                style: const TextStyle(color: AppColors.white),
                               ),
                               Text(
                                 'Bu hafta boyunca $tasksCompletedByUserInLastWeek görev tamamladın',
-                                style: TextStyle(color: white),
+                                style: const TextStyle(color: AppColors.white),
                               ),
                             ],
                           ),
@@ -152,18 +184,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           String completedBy = task['completedBy'];
 
                           return SizedBox(
-                            height: 200,
-                            child: Card(
-                              color: containerColor,
+                            height: 250,
+                            child: Card(      
+                              color: AppColors.containerColor,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
+                                  borderRadius: AppBorders.circularLow()),
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const AppPaddings.allSmall(),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           task['description'],
@@ -199,8 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 },
                                                 child: Text(
                                                   '${task['createdByName']}',
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
+                                                  style:  TextStyle(
+                                                      color: Colors.amber[300],
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
@@ -241,11 +275,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        return Dialog(
-                                                          child: Container(
+                                                        return const Dialog(
+                                                          child: SizedBox(
                                                             height: 70,
                                                             width: 300,
-                                                            child: const Center(
+                                                            child: Center(
                                                                 child: Text(
                                                                     "Kendinize Puan Veremezsiniz")),
                                                           ),
@@ -265,56 +299,48 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: Colors.green),
                                                   )
                                                 : const Text(""),
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.check_circle,
-                                                color: isCompleted
-                                                    ? Colors.green
-                                                    : Colors.grey,
-                                              ),
-                                              onPressed: isCompleted
-                                                  ? null
-                                                  : () {
-                                                      completeTask(task.id);
-                                                    },
+                                            Row(
+                                              children: [
+                                                const Text("Durum",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.check_circle,
+                                                    color: isCompleted
+                                                        ? Colors.green
+                                                        : Colors.grey,
+                                                  ),
+                                                  onPressed: isCompleted
+                                                      ? null
+                                                      : () {
+                                                          completeTask(task.id);
+                                                        },
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                    task['imageUrl'] != ''
-                                        ? Image.network(
-                                            task['imageUrl'],
-                                            width: 150,
-                                            fit: BoxFit.fill,
-                                          )
-                                        : const Text("Fotoğrafa ulaşılamadı"),
+                                    if (task['imageUrl'] != '')
+                                      Container(
+                                        height: 200,
+                                        width: 150,
+                                        decoration: const BoxDecoration(),
+                                        child: Image.network(
+                                          task['imageUrl'],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    else
+                                      const Text("Fotoğrafa ulaşılamadı"),
                                   ],
                                 ),
                               ),
-                             
                             ),
                           );
                         },
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ChatScreen(homeCode: homeCode)),
-                          );
-                        },
-                        icon: const Icon(Icons.message,color: Colors.white,)),
-                        IconButton(onPressed: () {
-                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ActivityScreen()));
-                        }, icon: const Icon(Icons.event,color: Colors.white,))
                   ],
                 ),
               );
@@ -326,22 +352,12 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.pushNamed(context, '/create-task');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_circle,color: AppColors.bgColor,),
       ),
-    
     );
   }
 
 
-
-  // IconButton(
-//   icon: Icon(Icons.star, color: Colors.yellow),
-//   onPressed: () {
-//     if (isCompleted && task['createdBy'] == user.uid && task['completedById'] != user.uid) {
-//       _showRatingDialog(task.id, task['completedById']);
-//     }
-//   },
-// ),
 
   Future<void> completeTask(String taskId) async {
     try {

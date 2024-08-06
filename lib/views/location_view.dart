@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fam_works/core/providers/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LocationView extends StatefulWidget {
   const LocationView({super.key});
@@ -16,11 +18,9 @@ class _LocationViewState extends State<LocationView> {
   @override
   void initState() {
     super.initState();
-    // Konum güncellemesi almak için LocationManager'dan current location'ı isteyin.
     Provider.of<LocationProvider>(context, listen: false).getCurrentLocation();
     _checkLocationPermission();
   }
-
 
   Future<void> _checkLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -37,44 +37,97 @@ class _LocationViewState extends State<LocationView> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
-      body: Consumer<LocationProvider>(
-        builder: (context, locationManager, child) {
-          if (locationManager.currentPosition == null) {
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance.collection('users').doc(user?.uid).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          if (!snapshot.hasData) {
+            return const Center(child: Text('Veri bulunamadı'));
+          }
 
-          final currentPosition = locationManager.currentPosition!;
-          final latLng = LatLng(currentPosition.latitude, currentPosition.longitude);
+          var userData = snapshot.data!;
+          String homeCode = userData['homeCode'];
 
-          return FlutterMap(
-            options: MapOptions(minZoom: 3,
-            maxZoom: 15,
-            
-              center: latLng,
-              zoom: 15.0,
-            ),
-            children: [
-              TileLayer(
-                urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                subdomains: ['a', 'b', 'c'],
-              ),
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    width: 80.0,
-                    height: 80.0,
-                    point: latLng,
-                   
-                     child: const Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                      size: 40.0,
+          return StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('locations')
+                .where('homeCode', isEqualTo: homeCode)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (!snapshot.hasData) {
+                return const Center(child: Text('Konum verisi bulunamadı'));
+              }
+
+              var locations = snapshot.data!.docs;
+
+              return Consumer<LocationProvider>(
+                builder: (context, locationManager, child) {
+                  if (locationManager.currentPosition == null) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final currentPosition = locationManager.currentPosition!;
+                  final latLng = LatLng(currentPosition.latitude, currentPosition.longitude);
+
+                  return FlutterMap(
+                    options: MapOptions(
+                      minZoom: 3,
+                      maxZoom: 25,
+                      center: latLng,
+                      zoom: 15.0,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    children: [
+                      TileLayer(
+                        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: ['a', 'b', 'c'],
+                      ),
+                      MarkerLayer(
+                        markers: locations.map((location) {
+                          var locData = location.data() as Map<String, dynamic>;
+                          return Marker(
+                            width: 80.0,
+                            height: 80.0,
+                            point: LatLng(locData['latitude'], locData['longitude']),
+                            
+                          
+                               child: Column(
+                                  children: [
+                                    FittedBox(
+                                      child: Text(
+                                        "${locData['name']} Konum",
+                                        style:  TextStyle(
+                                           color: locData['uid'] == user?.uid ? Colors.red : Colors.amber,
+                                           fontWeight: FontWeight.bold
+                                          ),
+                                      ),
+                                    ),
+                                    Icon(
+                                  Icons.location_on,
+                                  color: locData['uid'] == user?.uid ? Colors.red : Colors.amber,
+                                  size: 40.0,
+                                ),
+                                  ],
+                                      
+                              
+                                ),
+                            
+                            
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           );
         },
       ),
