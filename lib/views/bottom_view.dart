@@ -1,8 +1,8 @@
 import 'dart:collection';
 
-import 'package:fam_works/core/cache/image_network.dart';
-import 'package:fam_works/core/constants/app_colors.dart';
-import 'package:fam_works/core/providers/bottom_provider.dart';
+import 'package:fam_works/feature/utils/cache/image_network.dart';
+import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/feature/providers/bottom_provider.dart';
 import 'package:fam_works/feature/utils/navigator_helper.dart';
 import 'package:fam_works/views/location_view.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'home_view.dart';
 import 'activity_screen.dart';
 import 'chat_screen.dart';
-import 'profile_screen.dart';
+import 'profile_view.dart';
 
 class BottomView extends StatefulWidget {
   const BottomView({super.key});
@@ -49,13 +49,14 @@ class _BottomViewState extends State<BottomView> {
             const HomeView(),
             ActivityScreen(),
             ChatScreen(homeCode: homeCode),
-            ProfileScreen(userId: user.uid),
+            ProfileView(userId: user.uid),
           ];
 
           return _screens[bottomProvider.selectedIndex];
         },
       ),
-      bottomNavigationBar: AppBottomNavigationBar(bottomProvider: bottomProvider),
+      bottomNavigationBar:
+          AppBottomNavigationBar(bottomProvider: bottomProvider),
       drawer: AppDrawer(bottomProvider: bottomProvider),
     );
   }
@@ -165,7 +166,10 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               bottomProvider.onItemTapped(3);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const LocationView()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LocationView()));
             },
           ),
           ListTile(

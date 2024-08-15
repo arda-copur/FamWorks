@@ -6,17 +6,14 @@ import 'package:flutter/material.dart';
 class UserAuth {
   
   Future<void> registerUser(String name, String email, String password,
-      String homeCode, String? imageUrl,context,Future<T?> Function<T>(BuildContext) registerDialog,) async {
+      String homeCode, String? imageUrl,context) async {
     try {
       DocumentSnapshot homeDoc = await FirebaseFirestore.instance
           .collection('homes')
           .doc(homeCode)
           .get();
 
-      if (homeDoc.exists) {
-        registerDialog;
-        return; // Exit the function if homeCode exists
-      }
+     
 
       // Proceed with registration if homeCode does not exist
       UserCredential userCredential =
@@ -39,7 +36,7 @@ class UserAuth {
         'members': FieldValue.arrayUnion([user.uid])
       }, SetOptions(merge: true));
 
-      NavigatorHelper.navigateToView(context, "home");
+      NavigatorHelper.navigateToView(context, "rotate");
     } on FirebaseAuthException catch (e) {
       print("Error: $e");
     }

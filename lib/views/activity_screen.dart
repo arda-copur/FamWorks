@@ -1,3 +1,5 @@
+import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/feature/services/firebase_service.dart';
 import 'package:fam_works/views/create_activity.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,29 +7,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class ActivityScreen extends StatelessWidget {
-  final User user = FirebaseAuth.instance.currentUser!;
-  final Color bgColor = const Color(0xFF1C2341);
-  final Color containerColor = const Color(0xFF272D4A);
-  final Color white = const Color.fromARGB(255, 232, 218, 218);
+  FirebaseService service = FirebaseService();
+  final String activitiesText = "Aktiviteler";
+  final String activitiesErrorText = "Aktivite bulunamadı";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
-        backgroundColor: bgColor,
-        title: Text('Aktiviteler',style: TextStyle(color: Colors.white),),
+        backgroundColor: AppColors.bgColor,
+        title: Text(
+          activitiesText,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('activities')
-           // .where('invitees', arrayContains: user.uid)
+            // .where('invitees', arrayContains: user.uid)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('Aktivite bulunamadı'));
+            return Center(child: Text(activitiesErrorText));
           }
 
           var activities = snapshot.data!.docs;
@@ -36,29 +41,44 @@ class ActivityScreen extends StatelessWidget {
             itemCount: activities.length,
             itemBuilder: (context, index) {
               var activity = activities[index];
-              bool isParticipant = activity['participants'].contains(user.uid);
+              bool isParticipant =
+                  activity['participants'].contains(service.user.uid);
 
               return SizedBox(
                 height: 100,
                 width: 700,
                 child: Card(
-                  color: containerColor,
+                  color: AppColors.containerColor,
                   child: ListTile(
-                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(activity['title'],style: TextStyle(color: Colors.white),),
-                        Text(activity['location'],style: TextStyle(color: Colors.white),),
+                        Text(
+                          activity['title'],
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        Text(
+                          activity['location'],
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                     subtitle: Text(
-                      '${DateFormat('dd-MM-yyyy – HH:mm').format(activity['dateTime'].toDate())}',style: TextStyle(color: Colors.white),
-                      
+                      DateFormat('dd-MM-yyyy – HH:mm')
+                          .format(activity['dateTime'].toDate()),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     trailing: isParticipant
-                        ? Text('Katılıyorsun',style: TextStyle(color: Colors.white),)
+                        ? const Text(
+                            'Katılıyorsun',
+                            style: TextStyle(color: Colors.white),
+                          )
                         : ElevatedButton(
-                            onPressed: () => _joinActivity(activity.id),
-                            child: Text('Katıl',style: TextStyle(color: Colors.white),),
+                            onPressed: () => service.joinActivity(activity.id),
+                            child: const Text(
+                              'Katıl',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                   ),
                 ),
@@ -70,27 +90,20 @@ class ActivityScreen extends StatelessWidget {
       floatingActionButton: SizedBox(
         width: 150,
         child: FloatingActionButton(
-         backgroundColor: Color.fromARGB(255, 248, 198, 49),
+          backgroundColor: const Color.fromARGB(255, 248, 198, 49),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CreateActivityScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const CreateActivityScreen()),
             );
           },
-          child: Text("Plan Oluştur",style: TextStyle(color: Colors.white),),
+          child: const Text(
+            "Plan Oluştur",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
-  }
-
-  Future<void> _joinActivity(String activityId) async {
-    try {
-      await FirebaseFirestore.instance.collection('activities').doc(activityId).update({
-        'participants': FieldValue.arrayUnion([user.uid]),
-      });
-    } catch (e) {
-      print('Error joining activity: $e');
-      // Show error message to user
-    }
   }
 }

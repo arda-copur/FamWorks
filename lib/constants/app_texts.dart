@@ -6,4 +6,5 @@ class AppTexts {
   static const String clickForLogin = "Giriş yapmak için tıklayın";
   static const String login = "Giriş";
   static const String dontHaveAccount = 'Hesabınız\ yok mu? Kayıt olun';
+  static const String taskTitle = "Lütfen başlık giriniz";
 }

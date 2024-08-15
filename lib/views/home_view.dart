@@ -1,15 +1,11 @@
-import 'dart:async';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:fam_works/core/constants/app_borders.dart';
-import 'package:fam_works/core/constants/app_colors.dart';
-import 'package:fam_works/core/constants/app_paddings.dart';
-import 'package:fam_works/feature/services/connectivy/connectivy_manager.dart';
-import 'package:fam_works/views/profile_screen.dart';
+import 'package:fam_works/constants/app_borders.dart';
+import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/constants/app_paddings.dart';
+import 'package:fam_works/feature/utils/app_box.dart';
+import 'package:fam_works/viewmodels/home_vmodel.dart';
+import 'package:fam_works/views/profile_view.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -18,51 +14,17 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-
-  late StreamSubscription<ConnectivityResult> _subscription;
-   String _connectionStatus = 'Bağlantı durumu: Bilinmiyor';
-
-  @override
-  void initState() {
-    super.initState();
-    _subscription = ConnectivityManager()
-        .connectivityStream
-        .listen((ConnectivityResult result) {
-      setState(() {
-        _connectionStatus =
-            ConnectivityManager().getConnectionStatusString(result);
-      });
-    });
-
-    _checkCurrentConnectivity();
-  }
-
-  @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
-  }
-
-  Future<void> _checkCurrentConnectivity() async {
-    ConnectivityResult result =
-        await ConnectivityManager().getCurrentConnectivity();
-    setState(() {
-      _connectionStatus =
-          ConnectivityManager().getConnectionStatusString(result);
-    });
-  }
-
+class _HomeViewState extends HomeViewModel {
   @override
   Widget build(BuildContext context) {
-    final User user = FirebaseAuth.instance.currentUser!;
+    
 
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         backgroundColor: AppColors.bgColor,
         centerTitle: true,
-        title: Text(_connectionStatus,
+        title: Text(connectionStatus,
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge
@@ -71,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid)
+            .doc(service.user.uid)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -108,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
 
               // Son 24 saatte ve bir haftada tamamlanan görevlerin sayısını hesapla
               for (var task in tasks) {
-                if (task['completed'] && task['completedById'] == user.uid) {
+                if (task['completed'] && task['completedById'] == service.user.uid) {
                   DateTime taskCompletedAt =
                       (task['completedAt'] as Timestamp).toDate();
                   if (taskCompletedAt.isAfter(yesterday)) {
@@ -140,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
                                 : const AssetImage('assets/default_avatar.png')
                                     as ImageProvider,
                           ),
-                          const SizedBox(width: 16.0),
+                          const AppWidthBox(width: 16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -151,7 +113,7 @@ class _HomeViewState extends State<HomeView> {
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.white),
                               ),
-                              const SizedBox(height: 8.0),
+                              const AppHeightBox(),
                               Text(
                                 'Son 24 saatte $tasksCompletedByUserInLast24Hours görev tamamladın',
                                 style: const TextStyle(color: AppColors.white),
@@ -165,10 +127,10 @@ class _HomeViewState extends State<HomeView> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Görevler',
-                      style: TextStyle(
+                    const AppHeightBox(height: 20),
+                    Text(
+                      tasksText,
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -185,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
 
                           return SizedBox(
                             height: 250,
-                            child: Card(      
+                            child: Card(
                               color: AppColors.containerColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: AppBorders.circularLow()),
@@ -196,8 +158,10 @@ class _HomeViewState extends State<HomeView> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           task['description'],
@@ -216,16 +180,14 @@ class _HomeViewState extends State<HomeView> {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold),
                                             ),
-                                            const SizedBox(
-                                              width: 4,
-                                            ),
+                                           const AppWidthBox(width: 4),
                                             GestureDetector(
                                                 onTap: () {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          ProfileScreen(
+                                                          ProfileView(
                                                               userId: task[
                                                                   'createdBy']),
                                                     ),
@@ -233,7 +195,7 @@ class _HomeViewState extends State<HomeView> {
                                                 },
                                                 child: Text(
                                                   '${task['createdByName']}',
-                                                  style:  TextStyle(
+                                                  style: TextStyle(
                                                       color: Colors.amber[300],
                                                       fontWeight:
                                                           FontWeight.bold),
@@ -265,10 +227,10 @@ class _HomeViewState extends State<HomeView> {
                                               onPressed: () {
                                                 if (isCompleted &&
                                                     task['createdBy'] ==
-                                                        user.uid &&
+                                                        service.user.uid &&
                                                     task['completedById'] !=
-                                                        user.uid) {
-                                                  _showRatingDialog(task.id,
+                                                        service.user.uid) {
+                                                  showRatingDialog(task.id,
                                                       task['completedById']);
                                                 } else {
                                                   showDialog(
@@ -301,7 +263,13 @@ class _HomeViewState extends State<HomeView> {
                                                 : const Text(""),
                                             Row(
                                               children: [
-                                                const Text("Durum",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                                const Text(
+                                                  "Durum",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                                 IconButton(
                                                   icon: Icon(
                                                     Icons.check_circle,
@@ -312,7 +280,8 @@ class _HomeViewState extends State<HomeView> {
                                                   onPressed: isCompleted
                                                       ? null
                                                       : () {
-                                                          completeTask(task.id);
+                                                          service.completeTask(
+                                                              task.id);
                                                         },
                                                 ),
                                               ],
@@ -352,87 +321,11 @@ class _HomeViewState extends State<HomeView> {
         onPressed: () {
           Navigator.pushNamed(context, '/create-task');
         },
-        child: const Icon(Icons.add_circle,color: AppColors.bgColor,),
+        child: const Icon(
+          Icons.add_circle,
+          color: AppColors.bgColor,
+        ),
       ),
     );
-  }
-
-
-
-  Future<void> completeTask(String taskId) async {
-    try {
-      User user = FirebaseAuth.instance.currentUser!;
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
-      String userName = userDoc['name'];
-
-      await FirebaseFirestore.instance.collection('tasks').doc(taskId).update({
-        'completed': true,
-        'completedBy': userName,
-        'completedById': user.uid,
-        'completedAt': Timestamp.now(), // Görev tamamlanma tarihini güncelle
-      });
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
-  void _showRatingDialog(String taskId, String completedById) {
-    double _rating = 0.0;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Görevi tamamlayan kişiye puan verin'),
-          content: RatingBar.builder(
-            initialRating: 1,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => const Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            onRatingUpdate: (rating) {
-              setState(() {
-                _rating = rating;
-              });
-            },
-          ),
-          actions: [
-            TextButton(
-              child: const Text('İptal'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Puan Ver'),
-              onPressed: () {
-                _rateUser(taskId, completedById, _rating);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _rateUser(String taskId, String userId, double rating) async {
-    try {
-      await FirebaseFirestore.instance.collection('tasks').doc(taskId).update({
-        'ratings': FieldValue.arrayUnion([
-          {'userId': userId, 'rating': rating}
-        ]),
-      });
-    } catch (e) {
-      print("Error: $e");
-    }
   }
 }

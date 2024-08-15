@@ -1,12 +1,12 @@
-import 'package:fam_works/core/constants/app_colors.dart';
-import 'package:fam_works/core/constants/app_paddings.dart';
-import 'package:fam_works/core/constants/app_texts.dart';
-import 'package:fam_works/core/providers/media_provider.dart';
-import 'package:fam_works/core/providers/auth_module_provider.dart.dart';
-import 'package:fam_works/core/register/widgets/register_email_tf.dart';
-import 'package:fam_works/core/register/widgets/register_home_tf.dart';
-import 'package:fam_works/core/register/widgets/register_name_tf.dart.dart';
-import 'package:fam_works/core/register/widgets/register_password_tf.dart';
+import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/constants/app_paddings.dart';
+import 'package:fam_works/constants/app_texts.dart';
+import 'package:fam_works/feature/providers/media_provider.dart';
+import 'package:fam_works/feature/providers/auth_module_provider.dart.dart';
+import 'package:fam_works/auth/register/widgets/register_email_tf.dart';
+import 'package:fam_works/auth/register/widgets/register_home_tf.dart';
+import 'package:fam_works/auth/register/widgets/register_name_tf.dart.dart';
+import 'package:fam_works/auth/register/widgets/register_password_tf.dart';
 import 'package:fam_works/feature/services/auth/user_auth.dart';
 import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:fam_works/feature/utils/navigator_helper.dart';
@@ -15,21 +15,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _RegisterViewState createState() => _RegisterViewState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-
+class _RegisterViewState extends State<RegisterView> {
   final _formKey = GlobalKey<FormState>();
   UserAuth auth = UserAuth();
 
   @override
   Widget build(BuildContext context) {
-    final registerProvider = Provider.of<AuthModuleProvider>(context, listen: false); //true idi. false veya registerUserdaki context patlatıyor mu bir bak
+    final registerProvider = Provider.of<AuthModuleProvider>(context,
+        listen:
+            false); //true idi. false veya registerUserdaki context patlatıyor mu bir bak
     final mediaProvider = Provider.of<MediaProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: AppColors.bgColor,
@@ -123,8 +124,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           registerProvider.homeCodeController.text,
                           imageUrl,
                           context,
-                         homeCodeDialog,
-                         
                         );
                       }
                     },
@@ -154,8 +153,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
-
   Future<T?> homeCodeDialog<T>(context) {
     return showDialog(
         context: context,
@@ -174,7 +171,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ));
   }
 
-
   Future<void> registerUser(String name, String email, String password,
       String homeCode, String? imageUrl) async {
     try {
@@ -184,7 +180,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           .get();
 
       if (homeDoc.exists) {
-      
         return;
       }
 

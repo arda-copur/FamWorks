@@ -1,3 +1,4 @@
+import 'package:fam_works/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,10 +22,6 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
 
   List<Map<String, dynamic>> _familyMembers = [];
 
-  final Color bgColor = const Color(0xFF1C2341);
-  final Color containerColor = const Color(0xFF272D4A);
-  final Color white = const Color.fromARGB(255, 232, 218, 218);
-
   @override
   void initState() {
     super.initState();
@@ -36,12 +33,15 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       // Get all users with the same homeCode except the current user
       QuerySnapshot querySnapshot = await _firestore
           .collection('users')
-          .where('homeCode', isEqualTo: _user.uid) // Assuming homeCode is stored under 'uid' in users collection
+          .where('homeCode',
+              isEqualTo: _user
+                  .uid) // Assuming homeCode is stored under 'uid' in users collection
           .get();
 
       setState(() {
-        _familyMembers =
-            querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+        _familyMembers = querySnapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
       });
     } catch (e) {
       print('Error fetching family members: $e');
@@ -52,10 +52,10 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
-        backgroundColor: bgColor,
-        title: Text('Yeni Aktivite Oluştur'),
+        backgroundColor: AppColors.bgColor,
+        title: const Text('Yeni Aktivite Oluştur'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,21 +65,22 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
             children: [
               TextField(
                 controller: _titleController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Başlık',
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextField(
                 controller: _locationController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Konum (isteğe bağlı)',
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ListTile(
-                title: Text('Tarih Seçin'),
-                subtitle: Text('${DateFormat('dd-MM-yyyy').format(_selectedDate)}'),
+                title: const Text('Tarih Seçin'),
+                subtitle:
+                    Text('${DateFormat('dd-MM-yyyy').format(_selectedDate)}'),
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
                     context: context,
@@ -95,7 +96,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                 },
               ),
               ListTile(
-                title: Text('Saat Seçin'),
+                title: const Text('Saat Seçin'),
                 subtitle: Text('${_selectedTime.format(context)}'),
                 onTap: () async {
                   final TimeOfDay? picked = await showTimePicker(
@@ -109,15 +110,15 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                   }
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: _selectInvitees,
                 child: Text('Davetli Seçin (${_selectedInvitees.length})'),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: _createActivity,
-                child: Text('Aktiviteyi Oluştur'),
+                child: const Text('Aktiviteyi Oluştur'),
               ),
             ],
           ),
@@ -131,7 +132,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Davetli Seçin'),
+          title: const Text('Davetli Seçin'),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return SingleChildScrollView(
@@ -139,7 +140,8 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                   children: _familyMembers.map((member) {
                     bool isSelected = _selectedInvitees.contains(member['uid']);
                     return CheckboxListTile(
-                      title: Text(member['displayName'] ?? ''), // Replace with user display name
+                      title: Text(member['displayName'] ??
+                          ''), // Replace with user display name
                       value: isSelected,
                       onChanged: (bool? value) {
                         setState(() {
@@ -161,7 +163,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Tamam'),
+              child: const Text('Tamam'),
             ),
           ],
         ),
@@ -175,7 +177,9 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
   Future<void> _createActivity() async {
     try {
       String title = _titleController.text.trim();
-      String? location = _locationController.text.isNotEmpty ? _locationController.text.trim() : null;
+      String? location = _locationController.text.isNotEmpty
+          ? _locationController.text.trim()
+          : null;
       DateTime combinedDateTime = DateTime(
         _selectedDate.year,
         _selectedDate.month,
@@ -185,7 +189,9 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       );
       List<String> invitees = _selectedInvitees;
       String createdBy = _user.uid;
-      List<String> participants = [_user.uid]; // Include creator in participants initially
+      List<String> participants = [
+        _user.uid
+      ]; // Include creator in participants initially
 
       // Save activity to Firestore
       await _firestore.collection('activities').add({

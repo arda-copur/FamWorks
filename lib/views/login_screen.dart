@@ -1,9 +1,9 @@
-import 'package:fam_works/core/constants/app_borders.dart';
-import 'package:fam_works/core/constants/app_colors.dart';
-import 'package:fam_works/core/constants/app_paddings.dart';
-import 'package:fam_works/core/constants/app_texts.dart';
-import 'package:fam_works/core/login/widgets/login_email_textfield.dart';
-import 'package:fam_works/core/login/widgets/login_password_textfield.dart';
+import 'package:fam_works/constants/app_borders.dart';
+import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/constants/app_paddings.dart';
+import 'package:fam_works/constants/app_texts.dart';
+import 'package:fam_works/auth/login/widgets/login_email_textfield.dart';
+import 'package:fam_works/auth/login/widgets/login_password_textfield.dart';
 import 'package:fam_works/feature/services/auth/user_auth.dart';
 import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:fam_works/feature/utils/navigator_helper.dart';

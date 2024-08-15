@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fam_works/models/message_model.dart';
+import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/constants/app_paddings.dart';
+import 'package:fam_works/feature/services/firebase_service.dart';
+import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,35 +16,13 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final _messageController = TextEditingController();
-  final Color bgColor = const Color(0xFF1C2341);
-  final Color containerColor =  const Color(0xFF272D4A);
-  final Color white = Colors.white;
-
-  void _sendMessage() async {
-    if (_messageController.text.isNotEmpty) {
-      var currentUser = FirebaseAuth.instance.currentUser;
-      var userDoc = await FirebaseFirestore.instance.collection('users').doc(currentUser!.uid).get();
-      var userName = userDoc['name'];
-      var userProfilePic = userDoc['profilePic'];
-
-      Message message = Message(
-      text: _messageController.text,
-      senderId: currentUser.uid,
-      senderName: userName,
-      senderProfilePic: userProfilePic,
-      timestamp: Timestamp.now(),
-    );
-
-    FirebaseFirestore.instance.collection('chats').doc(widget.homeCode).collection('messages').add(message.toMap());
-      _messageController.clear();
-    }
-  }
+  final messageController = TextEditingController();
+  FirebaseService service = FirebaseService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: AppColors.bgColor,
       body: Column(
         children: [
           Expanded(
@@ -83,7 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Container(
             decoration: const BoxDecoration(
               border: Border(
-                top: BorderSide(color: Colors.white),
+                top: BorderSide(color: AppColors.white),
               ),
             ),
             child: Row(
@@ -91,23 +72,25 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const AppPaddings.allSmall(),
                     child: TextField(
-                      controller: _messageController,
+                      controller: messageController,
                       onChanged: (value) {
                         // Do something with the user input.
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Mesaj gönderin...',
                         border: InputBorder.none,
-                        hintStyle: TextStyle(color: white,fontWeight: FontWeight.w300)
+                        hintStyle: TextStyle(color: AppColors.white,fontWeight: FontWeight.w300)
                       ),
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send_rounded, color: white),
-                  onPressed: _sendMessage,
+                  icon: const Icon(Icons.send_rounded, color: AppColors.white),
+                  onPressed: () {
+                    service.sendMessage(messageController, widget.homeCode);
+                  }
                 ),
               ],
             ),
@@ -149,17 +132,17 @@ class MessageBubble extends StatelessWidget {
                   radius: 15,
                   backgroundImage: senderProfilePic.isNotEmpty 
                     ? NetworkImage(senderProfilePic)
-                    : AssetImage('assets/default_avatar.png') as ImageProvider,
+                    : const AssetImage('assets/default_avatar.png') as ImageProvider,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
               ],
               Material(
                 elevation: 5.0,
                 borderRadius: BorderRadius.only(
-                  topLeft: isMe ? Radius.circular(30.0) : Radius.circular(0.0),
-                  topRight: isMe ? Radius.circular(0.0) : Radius.circular(30.0),
-                  bottomLeft: Radius.circular(30.0),
-                  bottomRight: Radius.circular(30.0),
+                  topLeft: isMe ? const Radius.circular(30.0) : const Radius.circular(0.0),
+                  topRight: isMe ? const Radius.circular(0.0) : const Radius.circular(30.0),
+                  bottomLeft: const Radius.circular(30.0),
+                  bottomRight: const Radius.circular(30.0),
                 ),
                 color: isMe ? bubbleColor : Colors.white,
                 child: Padding(
@@ -179,17 +162,17 @@ class MessageBubble extends StatelessWidget {
                 ),
               ),
               if (isMe) ...[
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 CircleAvatar(
                   radius: 15,
                   backgroundImage: senderProfilePic.isNotEmpty 
                     ? NetworkImage(senderProfilePic)
-                    : AssetImage('assets/default_avatar.png') as ImageProvider,
+                    : const AssetImage('assets/default_avatar.png') as ImageProvider,
                 ),
               ],
             ],
           ),
-          SizedBox(height: 2),
+          const AppHeightBox(height: 2),
           Text(
             senderName,
             style: TextStyle(
