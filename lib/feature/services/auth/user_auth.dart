@@ -4,16 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserAuth {
-  
   Future<void> registerUser(String name, String email, String password,
-      String homeCode, String? imageUrl,context) async {
+      String homeCode, String? imageUrl, context) async {
     try {
       DocumentSnapshot homeDoc = await FirebaseFirestore.instance
           .collection('homes')
           .doc(homeCode)
           .get();
-
-     
 
       // Proceed with registration if homeCode does not exist
       UserCredential userCredential =
@@ -42,9 +39,7 @@ class UserAuth {
     }
   }
 
-
-  
-  Future<void> loginUser(String email, String password,context) async {
+  Future<void> loginUser(String email, String password, context) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
