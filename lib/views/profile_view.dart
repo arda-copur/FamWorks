@@ -68,7 +68,6 @@ class _ProfileViewState extends State<ProfileView> {
                       double ratingCount = 0;
 
                       for (var task in tasks) {
-                        
                         var ratings = task['ratings'] ?? [];
                         for (var rating in ratings) {
                           if (rating['userId'] == widget.userId) {
