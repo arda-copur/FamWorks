@@ -12,7 +12,7 @@ class UserAuth {
           .doc(homeCode)
           .get();
 
-      // Proceed with registration if homeCode does not exist
+      
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
