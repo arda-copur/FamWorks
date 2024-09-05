@@ -12,13 +12,21 @@ The Home Code creates a private space where only members of the same group can s
 
 ### Features
 Users can create their own private rooms.
+
 Users can share common tasks, which other members can view.
+
 Members of the same family can complete each other's tasks.
+
 After a task is completed, other members can rate the user who completed it.
+
 Users can plan events, which other members can view and indicate whether they will attend.
+
 Users can chat with each other in private chat rooms.
+
 Users can view created and completed tasks, as well as user ratings on their own profiles and others' profiles.
+
 Users can see each other's last known locations.
+
 All these features are only visible to members who share the same home code.
 
 ### Packages
@@ -88,13 +96,21 @@ aynı havuza düşer. Önceki tüm görevler, planları, etkinlikleri ve sohbetl
 
 ### Özellikler
 Kullanıcılar kendi özel odalarını oluşturabilir.
+
 Kullanıcılar ortak görev paylaşabilir ve dahil üyeler bunları görebilir.
+
 Aynı ailedeki kullanıcılar birbirlerinin görevlerini tamamlayabilir.
+
 Tamamlanan görev için tamamlayan kullanıcıya diğer üyeler puan verebilir.
+
 Kullanıcılar etkinlik planlayabilir.Diğer üyeler bu etkinliği görebilir, katılıp katılmayacaklarını belirtebilir.
+
 Kullanıcılar özel sohbet odalarında birbiriyle sohbet edebilir.
+
 Kullanıcılar kendi profillerinde ve diğer üye profillerinde oluşturulan, tamamlanan görevleri ve kullanıcı puanını görebilir.
+
 Kullanıcılar birbirlerinin son konumlarını görebilir.
+
 Tüm bu özellikleri sadece aynı ev koduna sahip üyeler görebilir.
 
 
