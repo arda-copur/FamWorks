@@ -4,7 +4,7 @@
 
 ## EN
 
-What is FamWorks?
+### What is FamWorks?
 FamWorks is a family, group, or community management application. It allows users to create an environment for shared goals. Users can assign tasks, organize events, evaluate each other, and stay in communication.
 
 ### What is the purpose of the "Home Code"?
