@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FirebaseService {
-
   User user = FirebaseAuth.instance.currentUser!;
 
-   Future<void> completeTask(String taskId) async {
+  Future<void> completeTask(String taskId) async {
     try {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -19,14 +18,13 @@ class FirebaseService {
         'completed': true,
         'completedBy': userName,
         'completedById': user.uid,
-        'completedAt': Timestamp.now(), 
+        'completedAt': Timestamp.now(),
       });
     } catch (e) {
       print("Error: $e");
     }
   }
 
- 
   Future<void> rateUser(String taskId, String userId, double rating) async {
     try {
       await FirebaseFirestore.instance.collection('tasks').doc(taskId).update({
@@ -39,31 +37,40 @@ class FirebaseService {
     }
   }
 
-  
-  void sendMessage(TextEditingController messageController,String homeCode) async {
+  void sendMessage(
+      TextEditingController messageController, String homeCode) async {
     if (messageController.text.isNotEmpty) {
       var currentUser = FirebaseAuth.instance.currentUser;
-      var userDoc = await FirebaseFirestore.instance.collection('users').doc(currentUser!.uid).get();
+      var userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .get();
       var userName = userDoc['name'];
       var userProfilePic = userDoc['profilePic'];
 
       Message message = Message(
-      text: messageController.text,
-      senderId: currentUser.uid,
-      senderName: userName,
-      senderProfilePic: userProfilePic,
-      timestamp: Timestamp.now(),
-    );
+        text: messageController.text,
+        senderId: currentUser.uid,
+        senderName: userName,
+        senderProfilePic: userProfilePic,
+        timestamp: Timestamp.now(),
+      );
 
-    FirebaseFirestore.instance.collection('chats').doc(homeCode).collection('messages').add(message.toMap());
+      FirebaseFirestore.instance
+          .collection('chats')
+          .doc(homeCode)
+          .collection('messages')
+          .add(message.toMap());
       messageController.clear();
     }
   }
-  
 
-    Future<void> joinActivity(String activityId) async {
+  Future<void> joinActivity(String activityId) async {
     try {
-      await FirebaseFirestore.instance.collection('activities').doc(activityId).update({
+      await FirebaseFirestore.instance
+          .collection('activities')
+          .doc(activityId)
+          .update({
         'participants': FieldValue.arrayUnion([user.uid]),
       });
     } catch (e) {
@@ -71,8 +78,4 @@ class FirebaseService {
       // Show error message to user
     }
   }
-
-  
-
-  
 }

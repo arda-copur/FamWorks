@@ -1,4 +1,7 @@
 import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/constants/app_paddings.dart';
+import 'package:fam_works/feature/services/firebase_service.dart';
+import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,7 +22,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
   List<String> _selectedInvitees = [];
   final User _user = FirebaseAuth.instance.currentUser!;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  final FirebaseService service = FirebaseService();
   List<Map<String, dynamic>> _familyMembers = [];
 
   @override
@@ -55,10 +58,9 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         backgroundColor: AppColors.bgColor,
-        title: const Text('Yeni Aktivite Oluştur'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: AppPaddings.allMedium(),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -69,14 +71,14 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                   labelText: 'Başlık',
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const AppHeightBox(height: 16),
               TextField(
                 controller: _locationController,
                 decoration: const InputDecoration(
                   labelText: 'Konum (isteğe bağlı)',
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const AppHeightBox(height: 16),
               ListTile(
                 title: const Text('Tarih Seçin'),
                 subtitle:
@@ -110,12 +112,12 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                   }
                 },
               ),
-              const SizedBox(height: 16.0),
+              const AppHeightBox(height: 16),
               ElevatedButton(
                 onPressed: _selectInvitees,
                 child: Text('Davetli Seçin (${_selectedInvitees.length})'),
               ),
-              const SizedBox(height: 16.0),
+              const AppHeightBox(height: 16),
               ElevatedButton(
                 onPressed: _createActivity,
                 child: const Text('Aktiviteyi Oluştur'),

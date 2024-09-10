@@ -1,13 +1,13 @@
 import 'package:fam_works/constants/app_colors.dart';
+import 'package:fam_works/feature/extensions/dynamic_size_extension.dart';
 import 'package:fam_works/feature/services/firebase_service.dart';
 import 'package:fam_works/views/create_activity.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class ActivityScreen extends StatelessWidget {
-  FirebaseService service = FirebaseService();
+  final FirebaseService service = FirebaseService();
   final String activitiesText = "Aktiviteler";
   final String activitiesErrorText = "Aktivite bulunamadı";
 
@@ -45,8 +45,8 @@ class ActivityScreen extends StatelessWidget {
                   activity['participants'].contains(service.user.uid);
 
               return SizedBox(
-                height: 100,
-                width: 700,
+                height: context.dynamicHeight(0.12),
+                width: context.dynamicWidth(0.8),
                 child: Card(
                   color: AppColors.containerColor,
                   child: ListTile(

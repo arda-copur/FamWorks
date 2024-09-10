@@ -1,3 +1,4 @@
+import 'package:fam_works/constants/app_colors.dart';
 import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:fam_works/viewmodels/task_vmodel.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,10 @@ class _CreateTaskViewState extends TaskViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.bgColor,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -73,7 +78,7 @@ class _CreateTaskViewState extends TaskViewModel {
                       );
                     }
                   },
-                  child:  Text(createTaskString),
+                  child: Text(createTaskString),
                 ),
               ],
             ),
