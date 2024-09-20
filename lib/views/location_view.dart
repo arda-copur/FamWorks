@@ -28,11 +28,9 @@ class _LocationViewState extends State<LocationView> {
       permission = await Geolocator.requestPermission();
     }
 
-    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
-      // Konum izni verildi, işlemleri yapabilirsiniz
-    } else {
-      // Konum izni verilmedi, kullanıcıya bilgi verin
-    }
+    if (permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always) {
+    } else {}
   }
 
   @override
@@ -41,7 +39,10 @@ class _LocationViewState extends State<LocationView> {
 
     return Scaffold(
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection('users').doc(user?.uid).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(user?.uid)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -75,7 +76,8 @@ class _LocationViewState extends State<LocationView> {
                   }
 
                   final currentPosition = locationManager.currentPosition!;
-                  final latLng = LatLng(currentPosition.latitude, currentPosition.longitude);
+                  final latLng = LatLng(
+                      currentPosition.latitude, currentPosition.longitude);
 
                   return FlutterMap(
                     options: MapOptions(
@@ -86,7 +88,8 @@ class _LocationViewState extends State<LocationView> {
                     ),
                     children: [
                       TileLayer(
-                        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        urlTemplate:
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         subdomains: ['a', 'b', 'c'],
                       ),
                       MarkerLayer(
@@ -95,31 +98,29 @@ class _LocationViewState extends State<LocationView> {
                           return Marker(
                             width: 80.0,
                             height: 80.0,
-                            point: LatLng(locData['latitude'], locData['longitude']),
-                            
-                          
-                               child: Column(
-                                  children: [
-                                    FittedBox(
-                                      child: Text(
-                                        "${locData['name']} Konum",
-                                        style:  TextStyle(
-                                           color: locData['uid'] == user?.uid ? Colors.red : Colors.amber,
-                                           fontWeight: FontWeight.bold
-                                          ),
-                                      ),
-                                    ),
-                                    Icon(
+                            point: LatLng(
+                                locData['latitude'], locData['longitude']),
+                            child: Column(
+                              children: [
+                                FittedBox(
+                                  child: Text(
+                                    "${locData['name']} Konum",
+                                    style: TextStyle(
+                                        color: locData['uid'] == user?.uid
+                                            ? Colors.red
+                                            : Colors.amber,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Icon(
                                   Icons.location_on,
-                                  color: locData['uid'] == user?.uid ? Colors.red : Colors.amber,
+                                  color: locData['uid'] == user?.uid
+                                      ? Colors.red
+                                      : Colors.amber,
                                   size: 40.0,
                                 ),
-                                  ],
-                                      
-                              
-                                ),
-                            
-                            
+                              ],
+                            ),
                           );
                         }).toList(),
                       ),
@@ -133,7 +134,8 @@ class _LocationViewState extends State<LocationView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Provider.of<LocationProvider>(context, listen: false).getCurrentLocation();
+          Provider.of<LocationProvider>(context, listen: false)
+              .getCurrentLocation();
         },
         child: const Icon(Icons.my_location),
       ),

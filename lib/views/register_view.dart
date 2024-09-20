@@ -28,9 +28,8 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    final registerProvider = Provider.of<AuthModuleProvider>(context,
-        listen:
-            false); //true idi. false veya registerUserdaki context patlatıyor mu bir bak
+    final registerProvider =
+        Provider.of<AuthModuleProvider>(context, listen: false);
     final mediaProvider = Provider.of<MediaProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: AppColors.bgColor,

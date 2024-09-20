@@ -17,8 +17,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends HomeViewModel {
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
@@ -63,14 +61,13 @@ class _HomeViewState extends HomeViewModel {
               int tasksCompletedByUserInLast24Hours = 0;
               int tasksCompletedByUserInLastWeek = 0;
 
-              // Tarih formatı için hazırlık
               DateTime now = DateTime.now();
               DateTime yesterday = now.subtract(const Duration(days: 1));
               DateTime oneWeekAgo = now.subtract(const Duration(days: 7));
 
-              // Son 24 saatte ve bir haftada tamamlanan görevlerin sayısını hesapla
               for (var task in tasks) {
-                if (task['completed'] && task['completedById'] == service.user.uid) {
+                if (task['completed'] &&
+                    task['completedById'] == service.user.uid) {
                   DateTime taskCompletedAt =
                       (task['completedAt'] as Timestamp).toDate();
                   if (taskCompletedAt.isAfter(yesterday)) {
@@ -81,7 +78,6 @@ class _HomeViewState extends HomeViewModel {
                   }
                 }
               }
-              //UI BAŞLANGICI
 
               return Padding(
                 padding: const AppPaddings.allMedium(),
@@ -180,7 +176,7 @@ class _HomeViewState extends HomeViewModel {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold),
                                             ),
-                                           const AppWidthBox(width: 4),
+                                            const AppWidthBox(width: 4),
                                             GestureDetector(
                                                 onTap: () {
                                                   Navigator.push(

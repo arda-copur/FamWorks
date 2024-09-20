@@ -75,7 +75,6 @@ class FirebaseService {
       });
     } catch (e) {
       print('Error joining activity: $e');
-      // Show error message to user
     }
   }
 }

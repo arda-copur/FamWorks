@@ -33,12 +33,9 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
 
   Future<void> _fetchFamilyMembers() async {
     try {
-      // Get all users with the same homeCode except the current user
       QuerySnapshot querySnapshot = await _firestore
           .collection('users')
-          .where('homeCode',
-              isEqualTo: _user
-                  .uid) // Assuming homeCode is stored under 'uid' in users collection
+          .where('homeCode', isEqualTo: _user.uid)
           .get();
 
       setState(() {
@@ -48,7 +45,6 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       });
     } catch (e) {
       print('Error fetching family members: $e');
-      // Show error message to user
     }
   }
 
@@ -172,7 +168,6 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       );
     } catch (e) {
       print('Error fetching family members: $e');
-      // Show error message to user
     }
   }
 
@@ -191,11 +186,8 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
       );
       List<String> invitees = _selectedInvitees;
       String createdBy = _user.uid;
-      List<String> participants = [
-        _user.uid
-      ]; // Include creator in participants initially
+      List<String> participants = [_user.uid];
 
-      // Save activity to Firestore
       await _firestore.collection('activities').add({
         'title': title,
         'location': location,
@@ -205,11 +197,9 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
         'participants': participants,
       });
 
-      // Navigate back or show success message
       Navigator.pop(context);
     } catch (e) {
       print('Error creating activity: $e');
-      // Show error message to user
     }
   }
 }
