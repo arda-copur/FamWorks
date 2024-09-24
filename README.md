@@ -14,25 +14,25 @@ The Home Code creates a private space where only members of the same group can s
 <h2>Screenshots</h2>
 <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
 
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss10.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss10.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss8.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss8.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss7.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss7.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss4.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss4.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss6.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss6.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss9.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss9.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss5.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss5.png" alt="project-screenshot" width="200" height="450"/>
  
- <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss3.png" alt="project-screenshot" width="300" height="550"/>
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss3.png" alt="project-screenshot" width="200" height="450"/>
 
 
 
