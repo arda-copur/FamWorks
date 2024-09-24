@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/78bdd591-ff72-462c-b91b-b61cfb7de020)
+
 # FamWorks
 
 
@@ -14,9 +14,9 @@ The Home Code creates a private space where only members of the same group can s
 <h2>Screenshots</h2>
 <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
 
-  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png?raw=true) alt="project-screenshot" width="370" height="700"/>
+ [ <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png?raw=true) alt="project-screenshot" width="370" height="700"/>](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png)
 
-  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png?raw=true) alt="project-screenshot" width="370" height="700"/>
+[  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png?raw=true) alt="project-screenshot" width="370" height="700"/>](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png)
 
   <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss3.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
