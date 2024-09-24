@@ -114,9 +114,7 @@ All these features are only visible to members who share the same home code.
 FamWorks bir aile, grup veya topluluk yönetim uygulamasıdır. Ortak amaçlar için kullanıcıların bir ortam yaratmasını sağlar. Kullanıcıların görev dağılımı yapabilmesini, etkinlikler düzenleyebilmesini, birbirini değerlendirebilmesini ve iletişimde kalabilmesini sağlar.
 
 ### "Ev Kodu" ne işe yarar?
-Ev kodu, ortak üyelerin sadece birbiriyle paylaşım yapabileceği ve iletişim kurabileceği özel bir alan oluşturmayı sağlar. Bu şekilde her hane kendi işlerini kendi içinde
-düzende tutar. Uygulamayı ilk kullanan üyenin kayıt olurken bir ev kodu belirlemesi yeterlidir. Sonradan uygulamayı yükleyen herhangi bir üye, aynı  kodu girdiği taktirde
-aynı havuza düşer. Önceki tüm görevler, planları, etkinlikleri ve sohbetleri görebilir.
+Ev kodu, ortak üyelerin sadece birbiriyle paylaşım yapabileceği ve iletişim kurabileceği özel bir alan oluşturmayı sağlar. Kullanıcılar bu kod sayesinde, aile üyelerinin görevlerini, mesajlarını, etkinliklerini ve tüm aktivitelerini görebilir.
 
 
 
