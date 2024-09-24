@@ -16,23 +16,23 @@ The Home Code creates a private space where only members of the same group can s
 
   <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/infoview2.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/infoview3.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss3.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/registerview.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss4.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/loginview.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss5.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/forgotpasswordview.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss6.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/homeview.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss7.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/search.png" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss8.png?raw=true) alt="project-screenshot" width="370" height="700"/>
   
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/chatview.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss9.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
-  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/chatview2.png" alt="project-screenshot" width="370" height="700"/>
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss10.png?raw=true) alt="project-screenshot" width="370" height="700"/>
 
 
 </div>
