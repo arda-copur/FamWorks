@@ -115,8 +115,14 @@ class _ProfileViewState extends State<ProfileView> {
                                 }
                                 if (!createdSnapshot.hasData ||
                                     createdSnapshot.data!.docs.isEmpty) {
-                                  return const Center(
-                                      child: Text('No created tasks'));
+                                  return Center(
+                                      child: Text(
+                                    'Henüz görev oluşturmamış.',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(color: AppColors.white),
+                                  ));
                                 }
 
                                 var createdTasks = createdSnapshot.data!.docs;

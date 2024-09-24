@@ -8,8 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'home_view.dart';
-import 'activity_screen.dart';
-import 'chat_screen.dart';
+import 'activity_view.dart';
+import 'chat_view.dart';
 import 'profile_view.dart';
 
 class BottomView extends StatefulWidget {
@@ -45,8 +45,8 @@ class _BottomViewState extends State<BottomView> {
 
           List<Widget> _screens = [
             const HomeView(),
-            ActivityScreen(),
-            ChatScreen(homeCode: homeCode),
+            ActivityView(),
+            ChatView(homeCode: homeCode),
             ProfileView(userId: user.uid),
           ];
 

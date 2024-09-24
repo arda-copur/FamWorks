@@ -45,8 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(color: Colors.white60),
                 ),
                 const AppHeightBox(height: 30),
-                LoginEmailTextfield(
-                    emailController: loginEmailController),
+                LoginEmailTextfield(emailController: loginEmailController),
                 const AppHeightBox(height: 16),
                 LoginPasswordTextfield(
                     passwordController: loginPasswordController),
@@ -57,16 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: AppBorders.circularLow()
-                      ),
+                          borderRadius: AppBorders.circularLow()),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        auth.loginUser(
-                          loginEmailController.text,
-                          loginPasswordController.text,
-                          context
-                        );
+                        auth.loginUser(loginEmailController.text,
+                            loginPasswordController.text, context);
                       }
                     },
                     child: const Text(
@@ -95,5 +90,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

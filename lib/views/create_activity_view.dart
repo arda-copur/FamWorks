@@ -7,14 +7,14 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class CreateActivityScreen extends StatefulWidget {
-  const CreateActivityScreen({Key? key}) : super(key: key);
+class CreateActivityView extends StatefulWidget {
+  const CreateActivityView({Key? key}) : super(key: key);
 
   @override
-  _CreateActivityScreenState createState() => _CreateActivityScreenState();
+  _CreateActivityViewState createState() => _CreateActivityViewState();
 }
 
-class _CreateActivityScreenState extends State<CreateActivityScreen> {
+class _CreateActivityViewState extends State<CreateActivityView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   DateTime _selectedDate = DateTime.now();

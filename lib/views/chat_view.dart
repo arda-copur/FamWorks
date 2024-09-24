@@ -6,16 +6,16 @@ import 'package:fam_works/feature/utils/app_box.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatView extends StatefulWidget {
   final String homeCode;
 
-  const ChatScreen({required this.homeCode});
+  const ChatView({required this.homeCode});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _ChatViewState createState() => _ChatViewState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatViewState extends State<ChatView> {
   final messageController = TextEditingController();
   FirebaseService service = FirebaseService();
 
@@ -55,7 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
                 return ListView(
                   reverse: true,
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   children: messageWidgets,
                 );
               },
@@ -79,19 +80,20 @@ class _ChatScreenState extends State<ChatScreen> {
                         // Do something with the user input.
                       },
                       decoration: const InputDecoration(
-                        hintText: 'Mesaj gönderin...',
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: AppColors.white,fontWeight: FontWeight.w300)
-                      ),
+                          hintText: 'Mesaj gönderin...',
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w300)),
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.send_rounded, color: AppColors.white),
-                  onPressed: () {
-                    service.sendMessage(messageController, widget.homeCode);
-                  }
-                ),
+                    icon:
+                        const Icon(Icons.send_rounded, color: AppColors.white),
+                    onPressed: () {
+                      service.sendMessage(messageController, widget.homeCode);
+                    }),
               ],
             ),
           ),
@@ -100,7 +102,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-
 
 class MessageBubble extends StatelessWidget {
   final String text;
@@ -122,31 +123,39 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment:
+                isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               if (!isMe) ...[
                 CircleAvatar(
                   radius: 15,
-                  backgroundImage: senderProfilePic.isNotEmpty 
-                    ? NetworkImage(senderProfilePic)
-                    : const AssetImage('assets/default_avatar.png') as ImageProvider,
+                  backgroundImage: senderProfilePic.isNotEmpty
+                      ? NetworkImage(senderProfilePic)
+                      : const AssetImage('assets/default_avatar.png')
+                          as ImageProvider,
                 ),
                 const SizedBox(width: 8),
               ],
               Material(
                 elevation: 5.0,
                 borderRadius: BorderRadius.only(
-                  topLeft: isMe ? const Radius.circular(30.0) : const Radius.circular(0.0),
-                  topRight: isMe ? const Radius.circular(0.0) : const Radius.circular(30.0),
+                  topLeft: isMe
+                      ? const Radius.circular(30.0)
+                      : const Radius.circular(0.0),
+                  topRight: isMe
+                      ? const Radius.circular(0.0)
+                      : const Radius.circular(30.0),
                   bottomLeft: const Radius.circular(30.0),
                   bottomRight: const Radius.circular(30.0),
                 ),
                 color: isMe ? bubbleColor : Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -165,9 +174,10 @@ class MessageBubble extends StatelessWidget {
                 const SizedBox(width: 8),
                 CircleAvatar(
                   radius: 15,
-                  backgroundImage: senderProfilePic.isNotEmpty 
-                    ? NetworkImage(senderProfilePic)
-                    : const AssetImage('assets/default_avatar.png') as ImageProvider,
+                  backgroundImage: senderProfilePic.isNotEmpty
+                      ? NetworkImage(senderProfilePic)
+                      : const AssetImage('assets/default_avatar.png')
+                          as ImageProvider,
                 ),
               ],
             ],

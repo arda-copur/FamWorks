@@ -1,12 +1,12 @@
 import 'package:fam_works/constants/app_colors.dart';
 import 'package:fam_works/feature/extensions/dynamic_size_extension.dart';
 import 'package:fam_works/feature/services/firebase_service.dart';
-import 'package:fam_works/views/create_activity.screen.dart';
+import 'package:fam_works/views/create_activity_view.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-class ActivityScreen extends StatelessWidget {
+class ActivityView extends StatelessWidget {
   final FirebaseService service = FirebaseService();
   final String activitiesText = "Aktiviteler";
   final String activitiesErrorText = "Aktivite bulunamadı";
@@ -55,7 +55,8 @@ class ActivityScreen extends StatelessWidget {
                       children: [
                         Text(
                           activity['title'],
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14),
                         ),
                         Text(
                           activity['location'],
@@ -71,13 +72,14 @@ class ActivityScreen extends StatelessWidget {
                     trailing: isParticipant
                         ? const Text(
                             'Katılıyorsun',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.green),
                           )
                         : ElevatedButton(
                             onPressed: () => service.joinActivity(activity.id),
                             child: const Text(
                               'Katıl',
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.amber, fontSize: 12),
                             ),
                           ),
                   ),
@@ -95,7 +97,7 @@ class ActivityScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const CreateActivityScreen()),
+                  builder: (context) => const CreateActivityView()),
             );
           },
           child: const Text(
