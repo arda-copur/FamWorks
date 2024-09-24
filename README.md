@@ -10,6 +10,32 @@ FamWorks is a family, group, or community management application. It allows user
 ### What is the purpose of the "Home Code"?
 The Home Code creates a private space where only members of the same group can share and communicate with each other. This way, each household can manage its tasks within its own group. When the first member uses the app, they just need to set a home code during registration. Any subsequent member who enters the same code will be added to the same pool. They will be able to see all previous tasks, plans, events, and chats because they are already part of the family.
 
+
+<h2>Screenshots</h2>
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss10.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss8.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss7.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss2.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss4.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss6.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss9.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss5.png" alt="project-screenshot" width="250" height="500"/>
+ 
+ <img src="https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss3.png" alt="project-screenshot" width="250" height="500"/>
+
+
+
 ### Features
 Users can create their own private rooms.
 
@@ -29,7 +55,7 @@ Users can see each other's last known locations.
 
 All these features are only visible to members who share the same home code.
 
-<h2>Packages</h2>
+### Packages
 
   
 
@@ -88,9 +114,7 @@ All these features are only visible to members who share the same home code.
 FamWorks bir aile, grup veya topluluk yönetim uygulamasıdır. Ortak amaçlar için kullanıcıların bir ortam yaratmasını sağlar. Kullanıcıların görev dağılımı yapabilmesini, etkinlikler düzenleyebilmesini, birbirini değerlendirebilmesini ve iletişimde kalabilmesini sağlar.
 
 ### "Ev Kodu" ne işe yarar?
-Ev kodu, ortak üyelerin sadece birbiriyle paylaşım yapabileceği ve iletişim kurabileceği özel bir alan oluşturmayı sağlar. Bu şekilde her hane kendi işlerini kendi içinde
-düzende tutar. Uygulamayı ilk kullanan üyenin kayıt olurken bir ev kodu belirlemesi yeterlidir. Sonradan uygulamayı yükleyen herhangi bir üye, aynı  kodu girdiği taktirde
-aynı havuza düşer. Önceki tüm görevler, planları, etkinlikleri ve sohbetleri görebilir.
+Ev kodu, ortak üyelerin sadece birbiriyle paylaşım yapabileceği ve iletişim kurabileceği özel bir alan oluşturmayı sağlar. Kullanıcılar bu kod sayesinde, aile üyelerinin görevlerini, mesajlarını, etkinliklerini ve tüm aktivitelerini görebilir.
 
 
 
