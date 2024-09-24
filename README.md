@@ -55,7 +55,7 @@ Users can see each other's last known locations.
 
 All these features are only visible to members who share the same home code.
 
-<h2>Packages</h2>
+### Packages
 
   
 
