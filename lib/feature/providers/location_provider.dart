@@ -12,13 +12,11 @@ class LocationProvider with ChangeNotifier {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Konum servislerinin etkin olup olmadığını kontrol edin.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
     }
 
-    // Konum izni olup olmadığını kontrol edin.
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -28,14 +26,13 @@ class LocationProvider with ChangeNotifier {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    // Konumu alın ve Firestore'a kaydedin.
     _currentPosition = await Geolocator.getCurrentPosition();
 
-    // Firebase Auth ile şu anki kullanıcıyı alın
-   User? user = FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -47,13 +44,13 @@ class LocationProvider with ChangeNotifier {
 
       await FirebaseFirestore.instance
           .collection('locations')
-          .doc(user.uid) // Kullanıcıya özgü belgeyi güncelle
+          .doc(user.uid)
           .set({
-            'latitude': _currentPosition!.latitude,
-            'longitude': _currentPosition!.longitude,
-            'name': name,
-            'homeCode': homeCode,
-          }, SetOptions(merge: true)); // Belgeyi güncellemek için `merge: true` kullanılır
+        'latitude': _currentPosition!.latitude,
+        'longitude': _currentPosition!.longitude,
+        'name': name,
+        'homeCode': homeCode,
+      }, SetOptions(merge: true));
 
       notifyListeners();
     }
