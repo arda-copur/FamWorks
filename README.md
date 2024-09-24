@@ -1,4 +1,4 @@
-
+![image](https://github.com/user-attachments/assets/78bdd591-ff72-462c-b91b-b61cfb7de020)
 # FamWorks
 
 
@@ -9,6 +9,34 @@ FamWorks is a family, group, or community management application. It allows user
 
 ### What is the purpose of the "Home Code"?
 The Home Code creates a private space where only members of the same group can share and communicate with each other. This way, each household can manage its tasks within its own group. When the first member uses the app, they just need to set a home code during registration. Any subsequent member who enters the same code will be added to the same pool. They will be able to see all previous tasks, plans, events, and chats because they are already part of the family.
+
+
+<h2>Screenshots</h2>
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+  <img src=["https://github.com/arda-copur/Chat-App/blob/main/ss/infoview1.png"](https://github.com/arda-copur/FamWorks/blob/main/assets/ss/ss1.png?raw=true) alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/infoview2.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/infoview3.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/registerview.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/loginview.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/forgotpasswordview.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/homeview.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/search.png" width="370" height="700"/>
+  
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/chatview.png" alt="project-screenshot" width="370" height="700"/>
+
+  <img src="https://github.com/arda-copur/Chat-App/blob/main/ss/chatview2.png" alt="project-screenshot" width="370" height="700"/>
+
+
+</div>
+
 
 ### Features
 Users can create their own private rooms.
