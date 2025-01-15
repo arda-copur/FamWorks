@@ -137,4 +137,6 @@ Kullanıcılar birbirlerinin son konumlarını görebilir.
 
 Tüm bu özellikleri sadece aynı ev koduna sahip üyeler görebilir.
 
+Kullanıcılara bildirim gönderilebilir.
+
 
